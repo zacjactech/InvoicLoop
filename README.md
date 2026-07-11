@@ -8,7 +8,8 @@ tokens.
 
 ![Landing page](docs/screenshots/00-landing.png)
 
-**[Watch the demo video](docs/invoiceloop-demo.webm)** — a 2-minute walkthrough covering sign-up, invoice creation, customer management, dark mode, and mobile view.
+<!-- Upload docs/invoiceloop-demo.webm to YouTube or Google Drive and paste the link below -->
+**Demo video** — a 2-minute walkthrough covering sign-up, invoice creation, customer management, dark mode, and mobile view.
 
 > **Status:** early-stage MVP. The first signed-up user is auto-promoted to
 > `ADMIN`; everyone after is `MEMBER`. See [`SECURITY.md`](./SECURITY.md)

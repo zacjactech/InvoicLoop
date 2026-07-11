@@ -87,3 +87,7 @@ public/*.webp
 !public/favicon.ico
 !public/dashboard-screenshot.png
 
+
+# demo video (too large for git)
+docs/*.webm
+docs/*.mp4

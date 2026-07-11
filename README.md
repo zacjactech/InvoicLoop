@@ -1,10 +1,12 @@
-# InvoicLoop
+# InvoiceLoop
 
 A solo-tenant invoicing app for freelancers and small teams. Built with
 [Next.js](https://nextjs.org) 16 (App Router), [Prisma](https://www.prisma.io) 7,
 SQLite, and Tailwind CSS 4. Authentication is server-managed with HTTP-only
 session cookies; public invoice links are gated by opaque per-invoice share
 tokens.
+
+![Landing page](docs/screenshots/00-landing.png)
 
 > **Status:** early-stage MVP. The first signed-up user is auto-promoted to
 > `ADMIN`; everyone after is `MEMBER`. See [`SECURITY.md`](./SECURITY.md)
@@ -27,6 +29,8 @@ tokens.
   escaping, scoped multi-tenant queries.
 - **Audit log** — every create / update / delete writes an `ActivityLog`
   entry scoped to the acting user.
+- **Responsive** — mobile-first design, collapsible sidebar, card view on mobile.
+- **Dark mode** — system-aware with no flash, toggleable per user.
 
 ---
 
@@ -34,13 +38,13 @@ tokens.
 
 | | |
 |---|---|
-| **Login** — email + password, no auth SSO required | **Dashboard** — KPI cards, revenue chart, recent activity |
+| **Login** — email + password, no auth SSO required | **Dashboard** — KPI cards, revenue chart, recent invoices |
 | ![Login](docs/screenshots/01-login.png) | ![Dashboard](docs/screenshots/02-dashboard.png) |
-| **Invoices** — filterable table, bulk actions, CSV export | **Invoice detail** — line items, tax/discount math, Share Public Link |
+| **Invoices** — filterable list, bulk actions, CSV export | **Invoice detail** — line items, tax/discount, share link |
 | ![Invoices](docs/screenshots/03-invoices-list.png) | ![Invoice detail](docs/screenshots/04-invoice-detail.png) |
-| **Customers** — scoped per workspace, soft-delete | **Activity log** — every mutation is timestamped and attributed |
+| **Customers** — card grid, scoped per workspace | **Activity log** — every mutation timestamped and attributed |
 | ![Customers](docs/screenshots/05-customers.png) | ![Activity](docs/screenshots/06-activity.png) |
-| **Public invoice portal** — anonymous view + one-click settlement via signed share link |
+| **Public invoice portal** — anonymous view + one-click settlement via signed link |
 | ![Public portal](docs/screenshots/07-public-portal.png) |
 
 ---
@@ -55,6 +59,8 @@ tokens.
 | Validation   | Zod 4                               |
 | Auth         | bcryptjs + DB-backed sessions       |
 | Hashing      | `node:crypto` (SHA-256, HMAC-safe)  |
+| Testing      | Playwright (e2e)                    |
+| CI/CD        | GitHub Actions                      |
 | Tooling      | pnpm 11, TypeScript 5, ESLint 9     |
 
 ---
@@ -90,6 +96,7 @@ subsequent sign-ups are `MEMBER` by default.
 | `pnpm build`       | Production build                                 |
 | `pnpm start`       | Serve the production build                       |
 | `pnpm lint`        | ESLint (Next.js core-web-vitals + TS rules)     |
+| `pnpm test`        | Run Playwright e2e tests                         |
 | `pnpm db:push`     | Apply `schema.prisma` to the SQLite database     |
 | `pnpm db:generate` | Regenerate the typed Prisma client               |
 | `pnpm db:studio`   | Open Prisma Studio                               |
@@ -121,7 +128,7 @@ src/
 ├── app/                  # Next.js App Router (pages + API routes)
 │   ├── (auth)/           # login / signup / forgot / reset
 │   ├── api/              # /api/* route handlers
-│   │   ├── auth/         # signup, login, logout, session, forgot/reset
+│   │   ├── auth/         # signup, login, logout, session, profile, forgot/reset
 │   │   ├── invoices/...  # owner-side + public + share
 │   │   ├── customers/    # CRUD
 │   │   ├── search/       # command-palette search
@@ -131,14 +138,11 @@ src/
 │   └── layout.tsx
 ├── components/
 │   ├── features/         # app-level building blocks
-│   └── ui/               # primitives
+│   └── ui/               # primitives (button, input, dialog, toast, badge)
 ├── lib/
 │   ├── auth-session.ts   # cookie + DB session helpers
 │   ├── db.ts             # Prisma client
-│   ├── env.ts            # runtime env validation
 │   ├── mailer.ts         # email adapter (dev = logger)
-│   ├── public-token.ts   # share-link issuance + hashing
-│   ├── rate-limit.ts     # IP-bucketed limiter
 │   ├── reset-tokens.ts   # password-reset token helpers
 │   └── validators.ts     # Zod schemas
 ├── proxy.ts              # Next 16 middleware (auth gate)
@@ -146,7 +150,27 @@ src/
 prisma/
 ├── schema.prisma
 └── seed.ts               # no-op (see file for rationale)
+e2e/
+├── global.setup.ts       # shared auth state for tests
+├── auth.spec.ts          # auth flow tests
+├── dashboard.spec.ts     # dashboard navigation tests
+└── invoices.spec.ts      # invoice CRUD tests
 ```
+
+---
+
+## Testing
+
+```bash
+# Run all e2e tests (Chromium)
+pnpm test
+
+# Run with UI mode
+pnpm test:ui
+```
+
+Tests use a shared auth state (`e2e/global.setup.ts`) to avoid repeated
+signups. The Playwright config starts the dev server automatically.
 
 ---
 

@@ -85,4 +85,5 @@ public/*.png
 public/*.jpg
 public/*.webp
 !public/favicon.ico
+!public/dashboard-screenshot.png
 

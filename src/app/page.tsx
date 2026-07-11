@@ -179,7 +179,7 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="py-32 border-t border-[var(--border)]">
+    <section className="py-32">
       <div className="mx-auto max-w-6xl px-6">
         <AnimateOnScroll>
           <p className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
@@ -232,7 +232,7 @@ function UseCases() {
   ];
 
   return (
-    <section className="py-32 border-t border-[var(--border)] bg-[var(--surface-elevated)]/50">
+    <section className="py-32 bg-[var(--surface-elevated)]/50">
       <div className="mx-auto max-w-6xl px-6">
         <AnimateOnScroll>
           <p className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
@@ -284,7 +284,7 @@ function FAQ() {
   ];
 
   return (
-    <section className="py-32 border-t border-[var(--border)]">
+    <section className="py-32">
       <div className="mx-auto max-w-2xl px-6">
         <AnimateOnScroll>
           <p className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
@@ -316,7 +316,7 @@ function FAQ() {
 
 function FinalCTA() {
   return (
-    <section className="py-32 border-t border-[var(--border)]">
+    <section className="py-32">
       <div className="mx-auto max-w-6xl px-6">
         <AnimateOnScroll>
           <div className="glass-strong rounded-3xl p-12 text-center sm:p-20">
@@ -353,7 +353,7 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] py-10">
+    <footer className="py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
         <div className="flex items-center gap-2">
           <div

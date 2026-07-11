@@ -15,7 +15,10 @@ export function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   if (
+    path === "/" ||
     path.startsWith("/_next") ||
+    path.startsWith("/api/") ||
+    path.includes(".") ||
     PUBLIC_PATHS.some((p) => path.startsWith(p))
   ) {
     return NextResponse.next();

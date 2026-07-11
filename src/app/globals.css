@@ -201,3 +201,19 @@ body {
 .dialog-backdrop {
   animation: backdrop-fade-in 180ms ease-out;
 }
+
+/*
+  Scroll reveal — elements start invisible and slide up.
+  The AnimateOnScroll client component adds .animate-in when
+  the element enters the viewport. Respects prefers-reduced-motion.
+*/
+.animate-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in {
+    transition: none !important;
+  }
+}

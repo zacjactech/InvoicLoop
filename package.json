@@ -1,0 +1,54 @@
+{
+  "name": "invoicloop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Solo-tenant invoicing app built on Next.js, Prisma, and SQLite.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zacjactech/InvoicLoop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zacjactech/InvoicLoop/issues"
+  },
+  "homepage": "https://github.com/zacjactech/InvoicLoop#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "db:push": "prisma db push --accept-data-loss",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "db:seed": "pnpm tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-better-sqlite3": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.11.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.4.2",
+    "nanoid": "^5.1.16",
+    "next": "16.2.10",
+    "prisma": "^7.8.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.0",
+    "typescript": "^5"
+  }
+}

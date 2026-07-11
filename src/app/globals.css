@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/*
+  InvoiceLoop Design System — Glassmorphic edition
+  -------------------------------------------------------------
+  Layered glassmorphism: backdrop image on the canvas, frosted
+  white/70 surfaces inside a 32px rounded shell. Dark mode uses a
+  zinc-950 backdrop with the same semi-transparent chrome so the
+  shell still reads as a coherent product.
+*/
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f4f5f7;
+  --surface: #ffffff;
+  --surface-elevated: #f1f5f9;
+  --border: #e2e8f0;
+  --foreground: #0f172a;
+  --foreground-secondary: #64748b;
+  --foreground-muted: #94a3b8;
+
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-bg-strong: rgba(255, 255, 255, 0.97);
+  --glass-border: rgba(226, 232, 240, 0.80);
+  --shell-bg: rgba(255, 255, 255, 0.88);
+  --canvas-image: url("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80");
+  --canvas-overlay: linear-gradient(to bottom, rgba(244, 245, 247, 0.35), rgba(244, 245, 247, 0.25));
+}
+
+.dark {
+  --background: #09090b;
+  --surface: #18181b;
+  --surface-elevated: #27272a;
+  --border: #27272a;
+  --foreground: #fafafa;
+  --foreground-secondary: #a1a1aa;
+  --foreground-muted: #71717a;
+
+  --glass-bg: rgba(24, 24, 27, 0.75);
+  --glass-bg-strong: rgba(24, 24, 27, 0.85);
+  --glass-border: rgba(63, 63, 70, 0.60);
+  --shell-bg: rgba(9, 9, 11, 0.75);
+  --canvas-overlay: linear-gradient(to bottom, rgba(9, 9, 11, 0.25), rgba(9, 9, 11, 0.10));
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/*
+  Page canvas: backdrop photograph behind a frosted shell.
+  background-attachment: fixed keeps the parallax feel of the prototype
+  reference. The image is loaded from Unsplash via the design token
+  --canvas-image, with a subtle overlay so the chrome reads in either mode.
+*/
+body {
+  background-color: var(--background);
+  background-image: var(--canvas-overlay), var(--canvas-image);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-attachment: fixed, fixed;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+  Glassmorphic primitives — re-usable across screens.
+  Use .glass for the dominant surface tone (white/40 alpha) and
+  .glass-strong for cards that need to read as raised chrome.
+*/
+.glass {
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+.glass-strong {
+  background-color: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.shell {
+  background-color: var(--shell-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+}
+
+/*
+  Focus rail — high-contrast dual-ring on all focusable fields.
+  Same dual-ring as the existing system, retuned so it reads on glass.
+*/
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/80 focus-visible:ring-offset-2;
+  --tw-ring-offset-color: var(--background);
+}
+
+/* Hide horizontal scrollbar for swipe / overflow containers. */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/*
+  Print stylesheet — high-fidelity Letter/A4 output.
+  Hides administrative chrome and resets the invoice sheet for printing.
+*/
+@media print {
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .glass,
+  .glass-strong,
+  .shell {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  tr,
+  .print-avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+
+/* Toast slide-in. Slides up and fades in from below-right where toasts stack. */
+@keyframes toast-slide-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.toast-slide-in {
+  animation: toast-slide-in 220ms ease-out;
+}
+
+/* Dialog enter animation: scale up + fade. Paired with a backdrop fade. */
+@keyframes dialog-pop-in {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes backdrop-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dialog-pop-in {
+  animation: dialog-pop-in 180ms ease-out;
+  transform-origin: center;
+}
+
+.dialog-backdrop {
+  animation: backdrop-fade-in 180ms ease-out;
+}

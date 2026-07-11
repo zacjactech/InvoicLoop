@@ -30,6 +30,21 @@ tokens.
 
 ---
 
+## Screenshots
+
+| | |
+|---|---|
+| **Login** — email + password, no auth SSO required | **Dashboard** — KPI cards, revenue chart, recent activity |
+| ![Login](docs/screenshots/01-login.png) | ![Dashboard](docs/screenshots/02-dashboard.png) |
+| **Invoices** — filterable table, bulk actions, CSV export | **Invoice detail** — line items, tax/discount math, Share Public Link |
+| ![Invoices](docs/screenshots/03-invoices-list.png) | ![Invoice detail](docs/screenshots/04-invoice-detail.png) |
+| **Customers** — scoped per workspace, soft-delete | **Activity log** — every mutation is timestamped and attributed |
+| ![Customers](docs/screenshots/05-customers.png) | ![Activity](docs/screenshots/06-activity.png) |
+| **Public invoice portal** — anonymous view + one-click settlement via signed share link |
+| ![Public portal](docs/screenshots/07-public-portal.png) |
+
+---
+
 ## Tech stack
 
 | Layer        | Choice                              |

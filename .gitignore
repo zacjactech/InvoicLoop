@@ -71,3 +71,18 @@ next-env.d.ts
 /.mimo/
 /.aider*
 
+# auth sessions (local dev browser sessions)
+.auth/
+
+# test results / playwright reports
+/test-results/
+/playwright-report/
+/test-results
+/playwright-report
+
+# screenshots in public (generated assets)
+public/*.png
+public/*.jpg
+public/*.webp
+!public/favicon.ico
+

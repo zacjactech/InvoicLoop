@@ -95,7 +95,7 @@ export default function InvoiceDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <button
             onClick={() => router.back()}
@@ -110,7 +110,7 @@ export default function InvoiceDetailPage() {
             {invoice.status}
           </Badge>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {invoice.status === "DRAFT" && (
             <Button variant="secondary" onClick={() => handleUpdateStatus("SENT")}>
               Mark as Sent
@@ -145,42 +145,44 @@ export default function InvoiceDetailPage() {
             <h2 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 dark:text-slate-500">
               Line Items
             </h2>
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-slate-100 dark:border-slate-700/50">
-                  <th className="pb-3 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                    Description
-                  </th>
-                  <th className="pb-3 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                    Qty
-                  </th>
-                  <th className="pb-3 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                    Price
-                  </th>
-                  <th className="pb-3 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-                    Amount
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoice.items.map((item) => (
-                  <tr key={item.id} className="border-b border-slate-50 last:border-0 dark:border-slate-700/30">
-                    <td className="py-3 text-sm text-slate-900 dark:text-white">
-                      {item.description}
-                    </td>
-                    <td className="py-3 text-right text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">
-                      {item.quantity}
-                    </td>
-                    <td className="py-3 text-right text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">
-                      {formatCurrency(item.unitPrice)}
-                    </td>
-                    <td className="py-3 text-right text-sm font-semibold text-slate-900 dark:text-white">
-                      {formatCurrency(item.amount)}
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[480px]">
+                <thead>
+                  <tr className="border-b border-slate-100 dark:border-slate-700/50">
+                    <th className="pb-3 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      Description
+                    </th>
+                    <th className="pb-3 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      Qty
+                    </th>
+                    <th className="pb-3 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      Price
+                    </th>
+                    <th className="pb-3 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      Amount
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {invoice.items.map((item) => (
+                    <tr key={item.id} className="border-b border-slate-50 last:border-0 dark:border-slate-700/30">
+                      <td className="py-3 text-sm text-slate-900 dark:text-white">
+                        {item.description}
+                      </td>
+                      <td className="py-3 text-right text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">
+                        {item.quantity}
+                      </td>
+                      <td className="py-3 text-right text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">
+                        {formatCurrency(item.unitPrice)}
+                      </td>
+                      <td className="py-3 text-right text-sm font-semibold text-slate-900 dark:text-white">
+                        {formatCurrency(item.amount)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="mt-4 border-t border-slate-100 pt-4 space-y-2 dark:border-slate-700/50">
               <div className="flex justify-between text-sm">

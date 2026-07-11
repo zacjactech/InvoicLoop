@@ -129,7 +129,7 @@ export default function CustomersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Customers Ledger
@@ -151,7 +151,7 @@ export default function CustomersPage() {
         placeholder="Search customers..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="focus-ring w-80 rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)] px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-sm dark:text-white dark:placeholder:text-slate-500"
+        className="focus-ring w-full rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)] px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-sm dark:text-white dark:placeholder:text-slate-500 sm:w-80"
       />
 
       {customers.length === 0 ? (

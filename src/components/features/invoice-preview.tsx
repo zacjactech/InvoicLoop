@@ -45,7 +45,7 @@ export function InvoicePreview({
   const customer = customers.find((c) => c.id === customerId);
 
   return (
-    <div className="glass-strong rounded-2xl p-8 text-zinc-950 lg:sticky lg:top-8 print-container">
+    <div className="glass-strong rounded-2xl p-4 text-zinc-950 lg:sticky lg:top-8 lg:p-8 print-container sm:p-6">
       <div className="mb-6 text-center">
         <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">
           INVOICE
@@ -73,7 +73,8 @@ export function InvoicePreview({
         </p>
       </div>
 
-      <table className="w-full text-sm">
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[360px] text-sm">
         <thead>
           <tr className="border-b border-zinc-200 dark:border-zinc-700/50">
             <th className="pb-2 text-left text-xs font-bold text-zinc-400 uppercase tracking-wider">
@@ -109,6 +110,7 @@ export function InvoicePreview({
           ))}
         </tbody>
       </table>
+      </div>
 
       <div className="mt-4 space-y-2 pt-4">
         <div className="flex justify-between text-sm">

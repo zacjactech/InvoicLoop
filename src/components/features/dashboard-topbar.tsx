@@ -76,7 +76,7 @@ export function DashboardTopBar() {
             </svg>
             <span className="text-slate-400 dark:text-slate-500">Quick Search...</span>
           </div>
-          <kbd className="text-[10px] bg-slate-50 border border-[var(--border)] text-slate-400 rounded px-1.5 py-0.5 select-none dark:text-slate-500">
+          <kbd className="hidden sm:inline text-[10px] bg-slate-50 border border-[var(--border)] text-slate-400 rounded px-1.5 py-0.5 select-none dark:text-slate-500">
             Cmd K
           </kbd>
         </div>

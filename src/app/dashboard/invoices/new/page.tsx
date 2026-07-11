@@ -138,7 +138,7 @@ export default function NewInvoicePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <button
             onClick={() => router.back()}
@@ -267,41 +267,43 @@ export default function NewInvoicePage() {
             </div>
             <div className="space-y-3 pt-3">
               {items.map((item) => (
-                <div key={item.id} className="flex gap-2 items-center">
+                <div key={item.id} className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <input
                     placeholder="Description"
                     value={item.description}
                     onChange={(e) => updateItem(item.id, "description", e.target.value)}
                     className="focus-ring flex-1 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-sm dark:text-white dark:placeholder:text-zinc-400"
                   />
-                  <input
-                    type="number"
-                    min={1}
-                    value={item.quantity}
-                    onChange={(e) => updateItem(item.id, "quantity", Number(e.target.value))}
-                    className="focus-ring w-16 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2 py-2 text-sm text-slate-900 text-center backdrop-blur-sm dark:text-white"
-                  />
-                  <input
-                    type="number"
-                    min={0}
-                    step={0.01}
-                    value={item.unitPrice}
-                    onChange={(e) => updateItem(item.id, "unitPrice", Number(e.target.value))}
-                    className="focus-ring w-24 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2 py-2 text-sm text-slate-900 text-right backdrop-blur-sm dark:text-white"
-                  />
-                  <span className="w-24 text-right text-sm font-bold text-slate-900 dark:text-white">
-                    {formatCurrency(item.quantity * item.unitPrice)}
-                  </span>
-                  {items.length > 1 && (
-                    <button
-                      onClick={() => removeItem(item.id)}
-                      className="rounded-xl border border-[var(--border)] p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/50"
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                      </svg>
-                    </button>
-                  )}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      min={1}
+                      value={item.quantity}
+                      onChange={(e) => updateItem(item.id, "quantity", Number(e.target.value))}
+                      className="focus-ring w-16 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2 py-2 text-sm text-slate-900 text-center backdrop-blur-sm dark:text-white"
+                    />
+                    <input
+                      type="number"
+                      min={0}
+                      step={0.01}
+                      value={item.unitPrice}
+                      onChange={(e) => updateItem(item.id, "unitPrice", Number(e.target.value))}
+                      className="focus-ring w-24 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2 py-2 text-sm text-slate-900 text-right backdrop-blur-sm dark:text-white"
+                    />
+                    <span className="w-24 text-right text-sm font-bold text-slate-900 dark:text-white">
+                      {formatCurrency(item.quantity * item.unitPrice)}
+                    </span>
+                    {items.length > 1 && (
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="rounded-xl border border-[var(--border)] p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/50"
+                      >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

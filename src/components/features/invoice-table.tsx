@@ -116,101 +116,151 @@ export function InvoiceTable({
   }
 
   return (
-    <div ref={tableRef} className="glass rounded-2xl overflow-hidden shadow-sm">
-      <table className="w-full">
-        <thead>
-          <tr className="border-b border-slate-100 dark:border-slate-700">
-            <th className="p-4 text-left">
-              <input
-                type="checkbox"
-                checked={selectedIds.length === invoices.length && invoices.length > 0}
-                onChange={toggleAll}
-                className="h-4 w-4 rounded border-[var(--border)] dark:border-slate-700"
-              />
-            </th>
-            <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-              Invoice
-            </th>
-            <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-              Customer
-            </th>
-            <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-              Status
-            </th>
-            <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-              Due Date
-            </th>
-            <th className="p-4 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-              Total
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
-          {invoices.map((invoice) => (
-            <tr
-              key={invoice.id}
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  window.location.href = `/dashboard/invoices/${invoice.id}`;
-                }
-              }}
-              className={cn(
-                "transition-colors hover:bg-[var(--surface-elevated)] focus:bg-[var(--surface-elevated)] focus:outline-none",
-                selectedIds.includes(invoice.id) && "bg-[var(--surface-elevated)]"
-              )}
-            >
-              <td className="p-4">
-                <input
-                  type="checkbox"
-                  checked={selectedIds.includes(invoice.id)}
-                  onChange={() => toggleOne(invoice.id)}
-                  className="h-4 w-4 rounded border-[var(--border)] dark:border-slate-700"
-                />
-              </td>
-              <td className="p-4">
-                <Link
-                  href={`/dashboard/invoices/${invoice.id}`}
-                  className="text-sm font-bold text-emerald-600 hover:underline dark:text-emerald-400"
+    <>
+      {/* Desktop: table view */}
+      <div ref={tableRef} className="glass rounded-2xl overflow-hidden shadow-sm hidden md:block">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[640px]">
+            <thead>
+              <tr className="border-b border-slate-100 dark:border-slate-700">
+                <th className="p-4 text-left">
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.length === invoices.length && invoices.length > 0}
+                    onChange={toggleAll}
+                    className="h-4 w-4 rounded border-[var(--border)] dark:border-slate-700"
+                  />
+                </th>
+                <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Invoice
+                </th>
+                <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Customer
+                </th>
+                <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Status
+                </th>
+                <th className="p-4 text-left text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Due Date
+                </th>
+                <th className="p-4 text-right text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Total
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
+              {invoices.map((invoice) => (
+                <tr
+                  key={invoice.id}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      window.location.href = `/dashboard/invoices/${invoice.id}`;
+                    }
+                  }}
+                  className={cn(
+                    "transition-colors hover:bg-[var(--surface-elevated)] focus:bg-[var(--surface-elevated)] focus:outline-none",
+                    selectedIds.includes(invoice.id) && "bg-[var(--surface-elevated)]"
+                  )}
                 >
-                  {invoice.invoiceNumber}
-                </Link>
-              </td>
-              <td className="p-4">
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                  <td className="p-4">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.includes(invoice.id)}
+                      onChange={() => toggleOne(invoice.id)}
+                      className="h-4 w-4 rounded border-[var(--border)] dark:border-slate-700"
+                    />
+                  </td>
+                  <td className="p-4">
+                    <Link
+                      href={`/dashboard/invoices/${invoice.id}`}
+                      className="text-sm font-bold text-emerald-600 hover:underline dark:text-emerald-400"
+                    >
+                      {invoice.invoiceNumber}
+                    </Link>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                      {invoice.customer.name}
+                    </p>
+                    {invoice.customer.company && (
+                      <p className="text-xs text-slate-400 dark:text-slate-500">
+                        {invoice.customer.company}
+                      </p>
+                    )}
+                  </td>
+                  <td className="p-4">
+                    <Badge variant={invoiceStatusVariant(invoice.status)}>
+                      {invoice.status}
+                    </Badge>
+                  </td>
+                  <td className="p-4">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">
+                      {formatDateShort(invoice.dueDate)}
+                    </p>
+                  </td>
+                  <td className="p-4 text-right">
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      {formatCurrency(invoice.total)}
+                    </p>
+                    {invoice.balancePaid > 0 && invoice.balancePaid < invoice.total && (
+                      <p className="text-xs text-slate-400 dark:text-slate-500">
+                        {formatCurrency(invoice.balancePaid)} paid
+                      </p>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Mobile: card view */}
+      <div className="md:hidden space-y-3">
+        {invoices.map((invoice) => (
+          <Link
+            key={invoice.id}
+            href={`/dashboard/invoices/${invoice.id}`}
+            className="glass block rounded-2xl p-4 shadow-sm transition-colors hover:bg-[var(--surface-elevated)]"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.includes(invoice.id)}
+                    onChange={() => toggleOne(invoice.id)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="h-4 w-4 shrink-0 rounded border-[var(--border)] dark:border-slate-700"
+                  />
+                  <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400 truncate">
+                    {invoice.invoiceNumber}
+                  </p>
+                </div>
+                <p className="mt-1 text-sm font-semibold text-slate-900 dark:text-white truncate">
                   {invoice.customer.name}
                 </p>
-                {invoice.customer.company && (
-                  <p className="text-xs text-slate-400 dark:text-slate-500">
-                    {invoice.customer.company}
-                  </p>
-                )}
-              </td>
-              <td className="p-4">
-                <Badge variant={invoiceStatusVariant(invoice.status)}>
-                  {invoice.status}
-                </Badge>
-              </td>
-              <td className="p-4">
-                <p className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">
-                  {formatDateShort(invoice.dueDate)}
-                </p>
-              </td>
-              <td className="p-4 text-right">
+              </div>
+              <div className="shrink-0 text-right">
                 <p className="text-sm font-bold text-slate-900 dark:text-white">
                   {formatCurrency(invoice.total)}
                 </p>
-                {invoice.balancePaid > 0 && invoice.balancePaid < invoice.total && (
-                  <p className="text-xs text-slate-400 dark:text-slate-500">
-                    {formatCurrency(invoice.balancePaid)} paid
-                  </p>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                <Badge variant={invoiceStatusVariant(invoice.status)}>
+                  {invoice.status}
+                </Badge>
+              </div>
+            </div>
+            <div className="mt-2 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500">
+              <span>Due {formatDateShort(invoice.dueDate)}</span>
+              {invoice.balancePaid > 0 && invoice.balancePaid < invoice.total && (
+                <span>{formatCurrency(invoice.balancePaid)} paid</span>
+              )}
+            </div>
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }

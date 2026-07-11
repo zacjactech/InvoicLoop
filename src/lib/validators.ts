@@ -56,6 +56,19 @@ export const ResetPasswordSchema = z.object({
     .max(128),
 });
 
+export const ProfileSchema = z.object({
+  name: z.string().min(1, "Name is required").max(120),
+  email: z.string().email("Invalid email address").max(254),
+});
+
+export const ChangePasswordSchema = z.object({
+  currentPassword: z.string().min(1, "Current password is required"),
+  newPassword: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(128),
+});
+
 export type CustomerInput = z.infer<typeof CustomerSchema>;
 export type InvoiceInput = z.infer<typeof InvoiceSchema>;
 export type InvoiceItemInput = z.infer<typeof InvoiceItemSchema>;
@@ -63,3 +76,5 @@ export type SignupInput = z.infer<typeof SignupSchema>;
 export type LoginInput = z.infer<typeof LoginSchema>;
 export type ForgotPasswordInput = z.infer<typeof ForgotPasswordSchema>;
 export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;
+export type ProfileInput = z.infer<typeof ProfileSchema>;
+export type ChangePasswordInput = z.infer<typeof ChangePasswordSchema>;

@@ -101,7 +101,7 @@ export default function InvoicesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             Invoices Directory
@@ -125,7 +125,7 @@ export default function InvoicesPage() {
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <input
           type="text"
           placeholder="Search Invoices by ID or client..."
@@ -134,9 +134,9 @@ export default function InvoicesPage() {
             setSearch(e.target.value);
             setPage(1);
           }}
-          className="focus-ring w-80 rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)] px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-sm dark:text-white dark:placeholder:text-slate-500"
+          className="focus-ring w-full rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)] px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400 backdrop-blur-sm dark:text-white dark:placeholder:text-slate-500 sm:w-80"
         />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {STATUS_FILTERS.map((f) => (
             <button
               key={f.value}
@@ -158,31 +158,33 @@ export default function InvoicesPage() {
       </div>
 
       {selectedIds.length > 0 && (
-        <div className="flex items-center gap-3 rounded-xl border border-emerald-200/50 bg-emerald-50/80 px-4 py-3 backdrop-blur-sm dark:border-emerald-800/30 dark:bg-emerald-950/30">
+        <div className="flex flex-col gap-3 rounded-xl border border-emerald-200/50 bg-emerald-50/80 p-4 backdrop-blur-sm sm:flex-row sm:items-center dark:border-emerald-800/30 dark:bg-emerald-950/30">
           <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
             {selectedIds.length} selected
           </span>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleBulkAction("mark_sent")}
-          >
-            Mark as Sent
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleBulkAction("mark_paid")}
-          >
-            Mark as Paid
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setConfirmDelete(true)}
-          >
-            Delete
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleBulkAction("mark_sent")}
+            >
+              Mark as Sent
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleBulkAction("mark_paid")}
+            >
+              Mark as Paid
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setConfirmDelete(true)}
+            >
+              Delete
+            </Button>
+          </div>
         </div>
       )}
 

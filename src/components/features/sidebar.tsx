@@ -100,13 +100,13 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="no-print flex w-64 shrink-0 flex-col border-r border-[var(--border)] bg-[var(--surface)] backdrop-blur-md max-md:w-16">
+    <aside className="no-print flex w-64 shrink-0 flex-col border-r border-[var(--border)] bg-[var(--surface)] backdrop-blur-md md:w-64 max-md:w-[60px]">
       {/* Brand Logo Header */}
-      <div className="flex h-16 items-center gap-2 border-b border-[var(--border)] px-6 select-none max-md:justify-center max-md:px-3">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-sm font-bold text-white shadow-sm max-md:hidden" style={{ transform: "rotate(-12deg)" }}>
+      <div className="flex h-14 items-center border-b border-[var(--border)] px-4 select-none md:px-6 md:justify-start max-md:justify-center">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-sm font-bold text-white shadow-sm" style={{ transform: "rotate(-12deg)" }}>
           I
         </div>
-        <div className="max-md:hidden">
+        <div className="ml-2 hidden md:block">
           <h1 className="text-sm font-bold tracking-tight text-slate-950 flex items-center gap-1.5 dark:text-white">
             InvoiceLoop
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -115,8 +115,8 @@ export function Sidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar px-3 py-4" aria-label="Primary">
-        <p className="px-3 mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none dark:text-slate-500">
+      <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar px-2 py-3 md:px-3 md:py-4" aria-label="Primary">
+        <p className="px-2 mb-2 text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none dark:text-slate-500 hidden md:block">
           Management
         </p>
 
@@ -130,21 +130,19 @@ export function Sidebar() {
               aria-current={isActive ? "page" : undefined}
               title={item.label}
               className={cn(
-                "flex items-center justify-between rounded-xl px-4 py-3 text-sm transition-all",
-                "max-md:justify-center max-md:px-2",
+                "flex items-center rounded-xl px-3 py-2.5 text-sm transition-all md:justify-between md:px-4 md:py-3",
+                "justify-center",
                 isActive
                   ? "bg-emerald-50/80 text-emerald-600 border border-emerald-100/10 font-semibold dark:bg-emerald-500/10 dark:text-emerald-400"
                   : "text-slate-600 hover:bg-[var(--surface-elevated)] hover:text-slate-900 font-medium dark:text-slate-400 dark:hover:text-white"
               )}
             >
-              <div className="flex items-center gap-3">
-                <span className={cn(isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500")}>
-                  {item.icon}
-                </span>
-                <span className="max-md:hidden">{item.label}</span>
-              </div>
+              <span className={cn(isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500")}>
+                {item.icon}
+              </span>
+              <span className="hidden md:inline ml-3 flex-1">{item.label}</span>
               {item.shortcut && (
-                <kbd className="max-md:hidden text-[10px] bg-[var(--surface)] text-slate-500 border border-[var(--border)] rounded px-1.5 py-0.5 dark:text-slate-400 dark:text-slate-500">
+                <kbd className="hidden md:inline text-[10px] bg-[var(--surface)] text-slate-500 border border-[var(--border)] rounded px-1.5 py-0.5 dark:text-slate-400 dark:text-slate-500">
                   {item.shortcut}
                 </kbd>
               )}
@@ -154,12 +152,15 @@ export function Sidebar() {
       </nav>
 
       {/* Profile Segment */}
-      <div className="border-t border-[var(--border)] bg-[var(--surface-elevated)] rounded-2xl m-3 p-4 space-y-4">
+      <div className="border-t border-[var(--border)] bg-[var(--surface-elevated)] rounded-2xl mx-2 mb-2 p-2 space-y-2 md:mx-3 md:mb-3 md:p-4 md:space-y-4">
         {user ? (
           <>
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface-elevated)] text-slate-700 font-semibold text-sm dark:text-white">
+            <Link
+              href="/dashboard/settings"
+              className="flex items-center justify-between gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-[var(--surface-elevated)] md:px-3"
+            >
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white font-semibold text-xs md:h-9 md:w-9 md:text-sm">
                   {user.name
                     .split(" ")
                     .map((n) => n[0])
@@ -167,7 +168,7 @@ export function Sidebar() {
                     .slice(0, 2)
                     .toUpperCase()}
                 </div>
-                <div className="min-w-0 max-md:hidden">
+                <div className="min-w-0 hidden md:block">
                   <p className="text-sm font-semibold truncate text-slate-900 dark:text-white">
                     {user.name}
                   </p>
@@ -176,43 +177,45 @@ export function Sidebar() {
                   </p>
                 </div>
               </div>
-              <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-100/20 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/20">
+              <span className="hidden md:inline shrink-0 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-100/20 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/20">
                 {user.role}
               </span>
+            </Link>
+
+            <div className="space-y-1">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                title="Toggle theme"
+                aria-label="Toggle theme"
+                className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-[var(--surface-elevated)] hover:text-slate-900 dark:text-slate-400 dark:hover:text-white justify-center md:justify-start md:px-3"
+              >
+                <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                </svg>
+                <span className="hidden md:inline">Toggle Theme</span>
+              </button>
+
+              <button
+                onClick={handleLogout}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-[var(--surface-elevated)] hover:text-slate-900",
+                  "dark:text-slate-400 dark:hover:text-white",
+                  "justify-center md:justify-start md:px-3"
+                )}
+                title="Sign Out"
+              >
+                <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                </svg>
+                <span className="hidden md:inline">Sign Out</span>
+              </button>
             </div>
-
-            <button
-              type="button"
-              onClick={toggleTheme}
-              title="Toggle theme"
-              aria-label="Toggle theme"
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-[var(--surface-elevated)] hover:text-slate-900 dark:text-slate-400 dark:hover:text-white max-md:justify-center max-md:px-2"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-              </svg>
-              <span className="max-md:hidden">Toggle Theme</span>
-            </button>
-
-            <button
-              onClick={handleLogout}
-              className={cn(
-                "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-[var(--surface-elevated)] hover:text-slate-900",
-                "dark:text-slate-400 dark:hover:text-white",
-                "max-md:justify-center max-md:px-2"
-              )}
-              title="Sign Out"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-              </svg>
-              <span className="max-md:hidden">Sign Out</span>
-            </button>
           </>
         ) : (
-          <div className="flex items-center gap-2">
-            <div className="h-9 w-9 animate-pulse rounded-full bg-[var(--surface-elevated)]" />
-            <div className="flex-1 space-y-1.5 max-md:hidden">
+          <div className="flex items-center justify-center md:justify-start md:gap-2">
+            <div className="h-8 w-8 animate-pulse rounded-full bg-[var(--surface-elevated)] md:h-9 md:w-9" />
+            <div className="hidden md:flex flex-1 space-y-1.5">
               <div className="h-3 w-24 animate-pulse rounded bg-[var(--surface-elevated)]" />
               <div className="h-2.5 w-32 animate-pulse rounded bg-[var(--surface-elevated)]" />
             </div>

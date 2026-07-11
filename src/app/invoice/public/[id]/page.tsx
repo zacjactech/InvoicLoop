@@ -105,8 +105,8 @@ export default function PublicInvoicePage() {
   const balanceDue = invoice.total - invoice.balancePaid;
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-8">
-      <div className="no-print mx-auto mb-8 max-w-4xl flex justify-between">
+    <div className="min-h-screen bg-[var(--background)] p-4 sm:p-8">
+      <div className="no-print mx-auto mb-8 max-w-4xl flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-lg font-semibold text-[var(--foreground)]">
           InvoiceLoop · Customer Portal
         </h1>
@@ -131,7 +131,7 @@ export default function PublicInvoicePage() {
             </Badge>
           </div>
 
-          <div className="mb-8 grid grid-cols-2 gap-8">
+          <div className="mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>
               <p className="text-xs font-medium uppercase text-[var(--foreground-muted)]">
                 Bill To
@@ -165,7 +165,8 @@ export default function PublicInvoicePage() {
             </div>
           </div>
 
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[400px] text-sm">
             <thead>
               <tr className="border-b-2 border-[var(--border)]">
                 <th className="pb-3 text-left text-xs font-medium uppercase text-[var(--foreground-muted)]">
@@ -199,6 +200,7 @@ export default function PublicInvoicePage() {
               ))}
             </tbody>
           </table>
+          </div>
 
           <div className="mt-6 space-y-2 border-t-2 border-[var(--border)] pt-4">
             <div className="flex justify-between text-sm">

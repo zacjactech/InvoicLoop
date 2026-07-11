@@ -2,6 +2,7 @@
   "name": "invoicloop",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.11.0",
   "description": "Solo-tenant invoicing app built on Next.js, Prisma, and SQLite.",
   "license": "MIT",
   "repository": {
